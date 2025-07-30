@@ -1,26 +1,17 @@
+from langchain.tools import tool
+from pydantic.v1 import BaseModel, Field
 from services import llm_service
 
-def process_text(text_to_process: str, task_instruction: str) -> str:
-    """
-    Uses the LLM to perform a specific writing task (e.g., summarize, rephrase) on a given text.
-    """
-    print(f"--- [Writer Agent Action]: Performing task '{task_instruction}' ---")
-    
-    # Is specific kaam ke liye LLM ko call karna
+class WriterInput(BaseModel):
+    text_to_process: str = Field(description="The block of text that needs to be processed.")
+    task_instruction: str = Field(description="A clear instruction for the writing task, e.g., 'summarize this in 3 bullet points'.")
+
+@tool("writer", args_schema=WriterInput)
+def writer(text_to_process: str, task_instruction: str) -> str:
+    """Use this tool to summarize, rephrase, or format a given block of text based on an instruction."""
+    print(f"\n[📝 Writer Agent] working on: task='{task_instruction}'\n")
     llm = llm_service.get_llm()
-    
-    # Writer agent ke liye ek dedicated prompt
-    prompt = f"""
-    You are a skilled writer. Your task is to: "{task_instruction}".
-
-    Here is the text you need to work on:
-    --- START OF TEXT ---
-    {text_to_process}
-    --- END OF TEXT ---
-
-    Please provide ONLY the resulting text as your output, without any extra commentary.
-    """
-    
+    prompt = f'You are a skilled writer. Your task is to: "{task_instruction}".\n\nHere is the text you need to work on:\n---\n{text_to_process}\n---\n\nProvide ONLY the resulting text as your output.'
     try:
         response = llm.invoke(prompt)
         return response

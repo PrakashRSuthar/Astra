@@ -1,6 +1,7 @@
 python-dotenv
-ollama
 langchain-core
 langchain-community
-langchain-ollama
 ddgs
+pydantic
+langchainhub
+langchain-groq

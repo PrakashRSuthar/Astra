@@ -1,17 +1,14 @@
-from ddgs.ddgs import DDGS  # <--- YAHAN CHANGE HAI
+from langchain.tools import tool
+from ddgs.ddgs import DDGS
 
-def search(query: str) -> str:
-    """
-    Searches the web for a given query using DuckDuckGo and returns the top 3 results.
-    """
-    print(f"--- [Real Agent Action]: Searching web for '{query}' ---")
+@tool
+def web_search(query: str) -> str:
+    """Use this for general, factual, or evergreen information. Do NOT use for recent news or current events."""
+    print(f"\n[🔎 Research Agent] working on: query='{query}'\n")
     try:
-        # Note: DDGS() ke andar ab koi parameter nahi hai
-        results = list(DDGS().text(query, max_results=3))
+        results = list(DDGS().text(query, max_results=5))
         if not results:
             return "No information found."
-        
-        formatted_results = "\n".join([f"Title: {res['title']}\nSnippet: {res['body']}\n---" for res in results])
-        return formatted_results
+        return "\n".join([f"Title: {res['title']}\nSnippet: {res['body']}\n---" for res in results])
     except Exception as e:
         return f"An error occurred during web search: {e}"

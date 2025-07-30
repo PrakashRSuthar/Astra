@@ -1,20 +1,13 @@
-from langchain_ollama import OllamaLLM  # <--- PEHLA CHANGE YAHAN
-import config
+from langchain_groq import ChatGroq
+import os
 
 def get_llm():
-    """Initializes and returns the Ollama LLM instance."""
-    if config.DEBUG_MODE:
-        print("Connecting to LLM...")
+    """Initializes and returns the ChatGroq model instance."""
     
-    # Yahan bhi class ka naam badla hai
-    llm = OllamaLLM(                 # <--- DOOSRA CHANGE YAHAN
-        model=config.OLLAMA_MODEL,
-        base_url=config.OLLAMA_BASE_URL,
-        temperature=0.0,
-        keep_alive="20m"
+    # Using Groq with the powerful Llama3 8b model. It's extremely fast and reliable.
+    llm = ChatGroq(
+        model="llama3-8b-8192",
+        temperature=0.1,  # Thodi si creativity ke liye
+        api_key=os.getenv("GROQ_API_KEY")
     )
-    
-    if config.DEBUG_MODE:
-        print("LLM connection successful. Model will stay in memory for 20 minutes of inactivity.")
-    
     return llm
