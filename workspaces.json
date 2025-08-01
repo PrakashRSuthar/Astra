@@ -1,0 +1,18 @@
+{
+  "dippy-dicky-dock": {
+    "apps": [
+      "C:/Users/pappu/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/GitHub, Inc/GitHub Desktop.lnk"
+    ],
+    "folders": [
+      "D:/Dippy-dikky-dock"
+    ],
+    "vscode_folders": [
+      "D:/Dippy-dikky-dock"
+    ],
+    "chrome_profile": "Default",
+    "tabs": [
+      "http://localhost:5173/",
+      "chrome://settings/manageProfile"
+    ]
+  }
+}
